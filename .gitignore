@@ -1,0 +1,30 @@
+# Node and Expo
+frontend-expo/node_modules/
+frontend-expo/.expo/
+frontend-expo/.DS_Store
+frontend-expo/dist/
+frontend-expo/web-build/
+frontend-expo/expo-env.d.ts
+frontend-expo/*.tsbuildinfo
+frontend-expo/npm-debug.log*
+frontend-expo/yarn-debug.log*
+frontend-expo/yarn-error.log*
+
+# Python
+backend-fastapi/__pycache__/
+backend-fastapi/*.pyc
+backend-fastapi/.pytest_cache/
+backend-fastapi/.mypy_cache/
+backend-fastapi/.DS_Store
+backend-fastapi/env/
+backend-fastapi/.env
+.vscode/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# GitHub
+*.orig.*
+*.log
