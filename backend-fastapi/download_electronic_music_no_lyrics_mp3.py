@@ -2,7 +2,7 @@ import requests
 
 # Sample public MP3 (no API key needed)
 url = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" # electronic music with no lyrics
-output_path = "sample_audio.mp3"
+output_path = "ElectronicMusic_NoLyrics_Kalimba.mp3"
 
 # Download the MP3 file
 print(f"Downloading from {url} to {output_path}...")
