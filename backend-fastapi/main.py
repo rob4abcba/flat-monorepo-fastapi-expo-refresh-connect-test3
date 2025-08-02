@@ -29,7 +29,7 @@ HEADERS = {"xi-api-key": ELEVENLABS_API_KEY}
 def ping():
     return {"message": "pongMISSYEkkkgggg"}
 
-@app.post("/tts/")
+@app.post("/tts")
 async def text_to_speech(
     text: str = Form(...),
     voice_id: str = Form(default="Rachel")
@@ -60,17 +60,42 @@ async def text_to_speech(
     return StreamingResponse(io.BytesIO(tts_response.content), media_type="audio/mpeg")
 
 @app.post("/stt/")
-async def transcribe_audio(file: UploadFile = File(...)):
-    audio = await file.read()
+# async def transcribe_audio(file: UploadFile = File(...)):
+async def transcribe_audio(
+    file: UploadFile = File(...),
+    # model_id: str = Form(default="eleven_multilingual_v2"),  # Add default
+    model_id: str = Form(...),
+    # language_id: str = Form(default="en")
+    language_id: str = Form(None)
+):
+    # audioYo = await file.read()
+    # async with httpx.AsyncClient() as client:
+    #     response = await client.post(
+    #         f"{ELEVENLABS_BASE_URL}/v1/speech-to-text",
+    #         headers={
+    #             **HEADERS,
+    #             "Content-Type": "application/octet-stream"
+    #         },
+    #         content=audioYo
+    #     )
+
+
+    audio_bytes = await file.read()
+    # Build multipart form-data for forwarding to ElevenLabs
+    multipart_data = {
+        "file": (file.filename, audio_bytes, file.content_type),
+        "model_id": (None, model_id)
+    }
+    if language_id:
+        multipart_data["language_id"] = (None, language_id)
     async with httpx.AsyncClient() as client:
         response = await client.post(
             f"{ELEVENLABS_BASE_URL}/v1/speech-to-text",
-            headers={
-                **HEADERS,
-                "Content-Type": "application/octet-stream"
-            },
-            content=audio
+            headers={"xi-api-key": ELEVENLABS_API_KEY},
+            files=multipart_data,
         )
+
+
     if response.status_code != 200:
         return {"error": response.text}
     return response.json()
