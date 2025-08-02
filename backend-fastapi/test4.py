@@ -1,3 +1,11 @@
+# First run main4.py to start the FastAPI server:
+# uvicorn main4:app --reload --host 0.0.0.0 --port 8000
+
+# Then run this test script to check the STT endpoint:
+# python3 test4.py
+
+# Make sure to have the ElevenLabs API key set in your environment variables:
+
 import requests
 
 url = "http://localhost:8000/stt/"
