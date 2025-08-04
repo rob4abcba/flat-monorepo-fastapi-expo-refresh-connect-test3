@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, Form, APIRouter, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 from utils.elevenlabs import get_elevenlabs_models
 import io
 import httpx
@@ -25,9 +26,20 @@ ELEVENLABS_BASE_URL = os.getenv("ELEVENLABS_BASE_URL", "https://api.elevenlabs.i
 HEADERS = {"xi-api-key": ELEVENLABS_API_KEY}
 # headers = {"xi-api-key": ELEVEN_API_KEY}
 
-@app.get("/ping")
-def ping():
-    return {"message": "pongMISSYEkkkgggg"}
+
+class PingRequest(BaseModel):
+    message: str
+
+class PingResponse(BaseModel):
+    message: str
+
+@app.post("/ping2", response_model=PingResponse)
+def ping2(data: PingRequest):
+    return {"message": f"Echo: {data.message}"}
+
+@app.get("/ping1")
+def ping1():
+    return {"message": "pongMISSkkkgggg"} # This is a test endpoint to check if the server is running.  If this message shows on the frontend in tab "refresh", the server is running and is correctly connected to the frontend with no CORS issues.
 
 @app.post("/tts")
 async def text_to_speech(
