@@ -1,4 +1,12 @@
 // app/(tabs)/stt.tsx
+// This file handles both recording audio and sending it to the server for transcription.
+// It includes two main steps: recording the audio and uploading it to the server for STT (Speech-to-Text) processing.
+// The transcription result is displayed on the screen.
+// The code uses Expo's Audio API for recording and React Native components for UI.
+// The server endpoint for STT is assumed to be at "/stt".
+// The code also includes error handling and user feedback for the recording and transcription process.
+// This file is part of a React Native application using Expo.
+// This file is a continuation of the stt2.tsx file, which only handles the recording part.
 
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, Alert } from "react-native";
