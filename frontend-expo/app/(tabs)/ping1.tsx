@@ -26,7 +26,7 @@ export default function RefreshScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>OneWay Ping Test: Send backend-fastapi message to frontend-expo for display</Text>
+      <Text style={styles.title}>OneWay Ping Test: Send backend-fastapi/main.py/@app.get("/ping1") message to frontend-expo for display</Text>
       
       <Button title="Send backend-fastapi message to frontend-expo Text box" onPress={fetchPing} disabled={loading} />
 

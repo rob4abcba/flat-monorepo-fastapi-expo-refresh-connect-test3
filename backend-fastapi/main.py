@@ -40,7 +40,7 @@ def ping2(data: PingRequest):
 
 @app.get("/ping1")
 def ping1():
-    return {"message": "pongMISSkkkgggg"} # This is a test endpoint to check if the server is running.  If this message shows on the frontend in tab "refresh", the server is running and is correctly connected to the frontend with no CORS issues.
+    return {"message": "pongMISSkkMAYBEkgggg"} # This is a test endpoint to check if the server is running.  If this message shows on the frontend in tab "refresh", the server is running and is correctly connected to the frontend with no CORS issues.
 
 @app.post("/tts")
 async def text_to_speech(
