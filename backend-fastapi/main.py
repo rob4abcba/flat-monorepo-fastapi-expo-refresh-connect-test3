@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from utils.elevenlabs import get_elevenlabs_models
+from utils.elevenlabs2 import get_elevenlabs_models2
 import io
 import httpx
 import os
@@ -116,16 +117,32 @@ async def transcribe_audio(
 async def list_models():
     async with httpx.AsyncClient() as client:
         res = await client.get(f"{ELEVENLABS_BASE_URL}/v1/models", headers=HEADERS)
+    # print("main.py: RAW RESPONSE JSON:")
+    # print(res.json())
     return res.json()
 
+# @app.get("/models")
+# async def models():
+#     # return await get_elevenlabs_models()
+#     return await get_elevenlabs_models2()
 @app.get("/models")
 async def models():
-    return await get_elevenlabs_models()
+    try:
+        data = await get_elevenlabs_models2()
+        print("✅ /models returned:", data)
+        return data
+    except Exception as e:
+        print("❌ /models failed:", e)
+        raise
 
 def fetch_model_ids_from_models():
     response = requests.get("http://localhost:8000/models", headers=HEADERS)
     response.raise_for_status()
-    return [model["model_id"] for model in response.json()]
+    data = response.json()
+    if not isinstance(data, list):
+        raise ValueError(f"/models returned unexpected data: {data}")
+    return [model["model_id"] for model in data]
+    # return [model["model_id"] for model in response.json()]
 
 
 def fetch_model_ids_from_list_models():
